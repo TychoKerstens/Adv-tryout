@@ -1,19 +1,39 @@
-# BIIIIIIIIIIIIIIIIIIIIIIIRDS
+class Room1(object):
+	
+	directions = {
+		'east': 'room2'
+	}
+	
+	def enter(self):
+		print "Hi."
+	
+class Room2(object):
+	
+	def enter(self):
+		print "Hello."
+		
+		
 class Room(object):
+	
+	rooms = {
+		'room1': Room1(),
+		'room2': Room2()
+	}
 	
 	def __init__(self, room_name):
 		self.room_name = room_name
 	
-	def move_to(self):
-		current_room = self.room_name.first_room()
+	def start_end(self):
+		current_room = Room1()
 		last_room = self.room_name.next_room('room2')
 			
 		while current_room != last_room:
-			next_room_name = current_room.enter()
+			current_room.enter()
 			print current_room.directions
 			choice = raw_input("> ")
-			current_room = self.room_name.next_room(next_room_name)
-
+			current_room = current_room.directions[choice]
+			current_room = self.rooms[current_room]
+			
 			
 class Player(object):
 
@@ -102,22 +122,12 @@ def fighting(Monster, Player):
 		if Player.player_defeated() == True:
 			print "You have been defeated"
 		#exit(0) for 
+		
 
-class Room1(object):
+class UserInterface(object):
+	pass 
 	
-	directions = {
-		'east': 'room2'
-	}
 	
-	def enter(self):
-		print "Hi."
-	
-class Room2(object):
-	
-	def enter(self):
-		print "Hello."
-
-
 class Maps(object):
 	
 	rooms = {
@@ -145,7 +155,7 @@ Backpack = {}
 
 begin = Maps('room1')
 start = Room(begin)
-start.move_to()
+start.start_end()
 
 #while True:
 	
